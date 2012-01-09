@@ -18,7 +18,7 @@ define('CONTENT_PATH', SITE_PATH.DS.'content/');
 define('MDL_PATH', SITE_PATH.DS.'modules/');
 define('TMPL_PATH', SITE_PATH.DS.'templates/');
 
-define('CLASS_PATH', SITE_PATH.DS.'classes/');
+define('CLASS_PATH', SITE_PATH.DS.'../classes/');
 
 define('IMAGES_PATH', CONTENT_PATH.DS.'content/images/');
 
