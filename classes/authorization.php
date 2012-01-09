@@ -5,7 +5,7 @@
  * Created by Isaev Mihael
  */
 
-class authorization extends mysqliDB
+class authorization
 {
     const STATE_LOGIN_EMPTY_LOGIN    = 0;
     const STATE_LOGIN_WRONG_LOGIN    = 1;
@@ -13,14 +13,16 @@ class authorization extends mysqliDB
     const STATE_LOGIN_SHORT_PASSWORD = 3;
     const STATE_LOGIN_WRONG_PASSWORD = 4;
     const STATE_LOGIN_SUCCESS        = 5;
-    const DB_SCHEMA;
+    private $DB_SCHEMA;
+    private $DB;
     
     /**
      * Constructor
      */
     public function __construct()
     {
-        DB_SCHEMA = new dbSchema();
+        $this->DB_SCHEMA = new dbSchema();
+        $this->DB = new mysqliDB();
     }
     
     /**
@@ -37,22 +39,22 @@ class authorization extends mysqliDB
      * @return STATE_LOGIN
      */
     public function login($login, $password){
-      $resultForLogin = parent::selectRow('SELECT * FROM '.DB_SCHEMA->TABLE_USERS.' WHERE '.DB_SCHEMA->CELL_USERS_LOGIN.' = ?', $login);
+      $this->DB->selectRow('SELECT * FROM '.$this->DB_SCHEMA->TABLE_USERS.' WHERE '.$this->DB_SCHEMA->CELL_USERS_LOGIN.' = ?', $login);
       
       if (!strlen(trim($login))){
         return STATE_LOGIN_EMPTY_LOGIN;
-      }elseif(!parent::queryInfo['num_rows']){
+      }elseif(!$this->DB->queryInfo['num_rows']){
         return STATE_LOGIN_WRONG_LOGIN;
       }
       
       $passwordMD5 = md5($password);
-      $resultForLoginAndPassword = parent::selectRow('SELECT * FROM '.DB_SCHEMA->TABLE_USERS.' WHERE '.DB_SCHEMA->CELL_USERS_LOGIN.' = ? AND '.DB_SCHEMA->CELL_USERS_PASSWORD.' = ?', $login, $passwordMD5);
+      $this->DB->selectRow('SELECT * FROM '.$this->DB_SCHEMA->TABLE_USERS.' WHERE '.$this->DB_SCHEMA->CELL_USERS_LOGIN.' = ? AND '.$this->DB_SCHEMA->CELL_USERS_PASSWORD.' = ?', $login, $passwordMD5);
       
       if (!strlen($password)) {
         return STATE_LOGIN_EMPTY_PASSWORD;
       }elseif(strlen($password)<6){
         return STATE_LOGIN_SHORT_PASSWORD;
-      }elseif(!parent::queryInfo['num_rows']){
+      }elseif(!$this->DB->queryInfo['num_rows']){
         return STATE_LOGIN_WRONG_PASSWORD;
       }
       
