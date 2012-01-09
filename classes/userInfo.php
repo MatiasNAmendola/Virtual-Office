@@ -7,13 +7,12 @@
 
 class userInfo
 {
-    getIp(){
-      if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+    public function getIp(){
+      if(!empty($_SERVER['HTTP_CLIENT_IP']))
         return $_SERVER['HTTP_CLIENT_IP'];
-      }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+      elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
         return $_SERVER['HTTP_X_FORWARDED_FOR'];
-      }else{
+      else
         return $_SERVER['REMOTE_ADDR'];
-      }
     }
 }

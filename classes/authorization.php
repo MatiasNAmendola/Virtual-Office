@@ -30,8 +30,11 @@ class authorization
      * for current user session
      * @return boolean true/false
      */
-    public function checkAuthorization($session){
-    
+    public function checkAuthorization(){
+        if (!isset($_SESSION[$this->DB_SCHEMA->TABLE_USERS]))
+            return false;
+        else
+            return true;
     }
     
     /**
@@ -42,23 +45,24 @@ class authorization
       $this->DB->selectRow('SELECT * FROM '.$this->DB_SCHEMA->TABLE_USERS.' WHERE '.$this->DB_SCHEMA->CELL_USERS_LOGIN.' = ?', $login);
       
       if (!strlen(trim($login))){
-        return STATE_LOGIN_EMPTY_LOGIN;
+        return $this::STATE_LOGIN_EMPTY_LOGIN;
       }elseif(!$this->DB->queryInfo['num_rows']){
-        return STATE_LOGIN_WRONG_LOGIN;
+        return $this::STATE_LOGIN_WRONG_LOGIN;
       }
       
       $passwordMD5 = md5($password);
-      $this->DB->selectRow('SELECT * FROM '.$this->DB_SCHEMA->TABLE_USERS.' WHERE '.$this->DB_SCHEMA->CELL_USERS_LOGIN.' = ? AND '.$this->DB_SCHEMA->CELL_USERS_PASSWORD.' = ?', $login, $passwordMD5);
+      $userInfo = $this->DB->selectRow('SELECT * FROM '.$this->DB_SCHEMA->TABLE_USERS.' WHERE '.$this->DB_SCHEMA->CELL_USERS_LOGIN.' = ? AND '.$this->DB_SCHEMA->CELL_USERS_PASSWORD.' = ?', $login, $passwordMD5);
       
       if (!strlen($password)) {
-        return STATE_LOGIN_EMPTY_PASSWORD;
+        return $this::STATE_LOGIN_EMPTY_PASSWORD;
       }elseif(strlen($password)<6){
-        return STATE_LOGIN_SHORT_PASSWORD;
+        return $this::STATE_LOGIN_SHORT_PASSWORD;
       }elseif(!$this->DB->queryInfo['num_rows']){
-        return STATE_LOGIN_WRONG_PASSWORD;
+        return $this::STATE_LOGIN_WRONG_PASSWORD;
       }
       
-      return STATE_LOGIN_SUCCESS;
+      $this->setAuthorized($userInfo);
+      return $this::STATE_LOGIN_SUCCESS;
     }
     
     /**
@@ -66,7 +70,7 @@ class authorization
      *
      */
     public function logout(){
-    
+        session_destroy();
     }
     
     /**
@@ -75,5 +79,9 @@ class authorization
      */
     public function register(){
     
+    }
+    
+    private function setAuthorized($userInfo){
+        $_SESSION[$this->DB_SCHEMA->TABLE_USERS] = $userInfo;
     }
 }

@@ -1,5 +1,6 @@
 <?
 
-session_destroy();
-echo json_encode(array('status' => 'LoggedOut', 'message' => ''));
+$authorization = new authorization();
+$authorization->logout();
+echo json_encode(array('status' => 'LoggedOut'));
 exit();

@@ -4,32 +4,32 @@ $authorization = new authorization();
 $authState = $authorization->login($_POST['login'], $_POST['password']);
 
 switch($authState){
-  case $authorization->STATE_LOGIN_EMPTY_LOGIN:
+  case $authorization::STATE_LOGIN_EMPTY_LOGIN:
     echo json_encode(array('status'   => 'error',
-                            'login'    => 'Введите логин',
+                            'login'    => 'Empty login',
                             'password' => ''));
     break;
-  case $authorization->STATE_LOGIN_WRONG_LOGIN:
+  case $authorization::STATE_LOGIN_WRONG_LOGIN:
     echo json_encode(array('status'   => 'error',
-                            'login'    => 'Пользователь не найден',
+                            'login'    => 'Wrong user',
                             'password' => ''));
     break;
-  case $authorization->STATE_LOGIN_EMPTY_PASSWORD:
+  case $authorization::STATE_LOGIN_EMPTY_PASSWORD:
     echo json_encode(array('status'   => 'error',
                             'login'    => '',
-                            'password' => 'Введите пароль'));
+                            'password' => 'Empty password'));
     break;
-  case $authorization->STATE_LOGIN_SHORT_PASSWORD:
+  case $authorization::STATE_LOGIN_SHORT_PASSWORD:
     echo json_encode(array('status'   => 'error',
                             'login'    => '',
-                            'password' => 'Длина пароля должна быть не менее 6 символов'));
+                            'password' => 'Length of pasword < 6 characters'));
     break;
-  case $authorization->STATE_LOGIN_WRONG_PASSWORD:
+  case $authorization::STATE_LOGIN_WRONG_PASSWORD:
     echo json_encode(array('status'   => 'error',
                             'login'    => '',
-                            'password' => 'Неверный пароль'));
+                            'password' => 'Wrong password'));
     break;
-  case $authorization->STATE_LOGIN_SUCCESS:
+  case $authorization::STATE_LOGIN_SUCCESS:
     echo json_encode(array('status' => 'success'));
     break;
 }

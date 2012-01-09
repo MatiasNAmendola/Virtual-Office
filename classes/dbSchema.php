@@ -8,8 +8,8 @@
 
 class dbSchema
 {
-    const TABLE_USERS = 'staff';
+    public $TABLE_USERS = 'staff';
     
-    const CELL_USERS_LOGIN    = 'Login';
-    const CELL_USERS_PASSWORD = 'Password';
+    public $CELL_USERS_LOGIN    = 'Login';
+    public $CELL_USERS_PASSWORD = 'Password';
 }

@@ -87,14 +87,20 @@ function Login(type) {
             dataType: 'json',
             beforeSend:function(){ProgressBar('show');},
             success: function (data, textStatus, XMLHttpRequest) {
-                if(data.status !== 'ok'){
-                    if(data.message!==''){alert(data.message);}else{
-                        if(data.login == ''){$('.login').css('background','#FFF');}else{$('.login').css('background','#ffe4e4');}
-                        $('.logininfo').html(data.login);
-                        if(data.password == ''){$('.password').css('background','#FFF');}else{$('.password').css('background','#ffe4e4');}
-                        $('.passwordinfo').html(data.password);
-                        ProgressBar('hide');
+                if(data.status !== 'success'){
+                    if(data.login == ''){
+                        $('.login').css('background','#FFF');
+                    }else{
+                        $('.login').css('background','#ffe4e4').focus();
                     }
+                    $('.logininfo').html(data.login);
+                    if(data.password == ''){
+                        $('.password').css('background','#FFF');
+                    }else{
+                        $('.password').css('background','#ffe4e4').focus();
+                    }
+                    $('.passwordinfo').html(data.password);
+                    ProgressBar('hide');
                 }else{
                     ProgressBar('hide');
                     Interface('Auth');
