@@ -1,30 +1,169 @@
-$(document).ready(function(){CheckAuth();});
-function CheckAuth() {	
-	if(navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-	    $.ajax({
-	        async: true,
-	        cache: false,
-	        type: 'POST',
-	        url: '/ajax.php',
-	        data: ({module: 'system', action:'checkauth'}),
-	        dataType: 'json',
-	        beforeSend:function(){ProgressBar("show");},
-	        success: function (data, textStatus, XMLHttpRequest) {
-	            if(data.status !== 'Authorized'){
-	                Interface('Unauth');
-	            }else{
-	                Interface('Auth');
-	            }
-	        },
-	        error: function (XMLHttpRequest, textStatus, errorThrown) {
-	            alert(textStatus);ProgressBar("hide");
-	        }
-	    });
-	}else{
-		$('.ModalBackground').fadeIn();
-		$('.BrowserAlert').fadeIn();
-	}
+/**
+ * Javascript class for Web Office
+ * Created by Mihael Isaev
+ */
+
+/**
+ * Authorization flag
+ */
+auhorized = false;
+
+/**
+ * On document ready function
+ */
+$(document).ready(function(){
+    checkAuth();
+});
+
+/**
+ * Ajax short method
+ */
+ajax = {}
+ajax.run = function(params) {
+    if(params.json)
+        dataType = 'json';
+    else
+        dataType = 'html';
+    $.ajax({
+        async: true,
+        cache: false,
+        type: 'POST',
+        url: '/ajax.php',
+        data: params.data,
+        dataType: dataType,
+        beforeSend:function(){
+            if(params.showProgressBar)
+                showProgressBar();
+        },
+        success: function (data, textStatus, XMLHttpRequest) {
+            params.onSuccess(data);
+            if(params.showProgressBar)
+                setTimeout(function(){hideProgressBar();}, 1000);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if(params.showProgressBar)
+                hideProgressBar();
+            params.onError();
+            alert(textStatus);
+        }
+    });
 }
+
+/**
+ * Interface loader
+ */
+function loadInterface(){
+    if(authorized)
+        loadCabinet();
+    else
+        loadLogin();
+}
+
+/**
+ * Authorization checker
+ * @return boolean true/false
+ */
+function checkAuth() {	
+    ajax.run({
+        data: ({module: 'system', action:'checkauth'}),
+        json: true,
+        showProgressBar: true,
+        onSuccess: function(data){
+            if(data.status !== 'Authorized')
+                authorized = false;
+            else
+                authorized = true;
+            loadInterface();
+        },
+        onError: function(){
+            authorized = false;
+            loadInterface();
+        }
+    });
+}
+
+/**
+ * Shower for progress bar
+ */
+function showProgressBar(){
+    if($('.progressBar').css('display')=='none')
+        $('.progressBar').fadeIn('fast');
+    if($('.modalBackground').css('display')=='none')
+        $('.modalBackground').fadeIn('fast');
+}
+
+/**
+ * Hider for progress bar
+ */
+function hideProgressBar(){
+    if($('.progressBar').css('display')=='block')
+        $('.progressBar').fadeOut('fast');
+    if($('.modalBackground').css('display')=='block')
+        $('.modalBackground').fadeOut('fast');
+}
+
+/**
+ * Load login html code
+ */
+function loadLogin(){
+    ajax.run({
+        data: ({module: 'html', action:'login'}),
+        showProgressBar: true,
+        onSuccess: function(data){
+            $('.mainData').html(data);
+            $('.loginForm').animate({top: 0}, 1000);
+            setTimeout(function(){$('.loginForm form').slideDown();}, 1200);
+            $('.loginForm .buttonEnter').bind('click', function(){login();});
+            $('.loginForm form').keypress(function(){
+                if(event.keyCode == 13)
+                    login();
+            });
+        }
+    });
+}
+
+/**
+ * Load cabinet html code
+ */
+function loadCabinet(){
+    ajax.run({
+        data: ({module: 'html', action:'cabinet'}),
+        showProgressBar: true,
+        onSuccess: function(data){
+            $('.mainData').html(data);
+            $('.head').animate({top: 0}, 1000);}
+    });
+}
+
+/**
+ * Function for sign in office
+ */
+function login(){
+    ajax.run({
+        data: ({module: 'system/anonymous', action:'login', login:$('.loginForm .email').val(), password:$('.loginForm .password').val()}),
+        json: true,
+        onSuccess: function(data){
+            if(data.status !== 'success'){
+                    if(data.login == '')
+                        $('.loginForm .email').css('background','#FFF');
+                    else
+                        $('.loginForm .email').css('background','#ffe4e4').focus();
+                    $('.loginForm .emailInfo').html(data.login);
+                    if(data.password == '')
+                        $('.loginForm .password').css('background','#FFF');
+                    else
+                        $('.loginForm .password').css('background','#ffe4e4').focus();
+                    $('.loginForm .passwordInfo').html(data.password);
+                }else
+                    checkAuth();
+        },
+        onError: function(){
+            authorized = false;
+            loadInterface();
+        }
+    });
+}
+
 function Logout() {
     if(dialog('выйти')){
         $.ajax({
@@ -40,20 +179,6 @@ function Logout() {
             }
         });
     }
-}
-
-function ProgressBar(key){
-	if(key=="show")
-		if($('.ProgressBar').css('display')=='none')
-			$('.ProgressBar').fadeIn('fast');
-		if($('.ModalBackground').css('display')=='none')
-			$('.ModalBackground').fadeIn('fast');
-	if(key=="hide"){
-		if($('.ProgressBar').css('display')=='block')
-			$('.ProgressBar').fadeOut('fast');
-		if($('.ModalBackground').css('display')=='block')
-			$('.ModalBackground').fadeOut('fast');
-	}
 }
 function ModalWindow(key,width,height,data){
     if(key=='show'){
