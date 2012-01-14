@@ -6,8 +6,8 @@
  * @author Mihael Isaev
  */
 class staff {
-    const USER_EMAIL = 0;
-    const USER_LOGIN = 1;
+    const STAFF_EMAIL = 0;
+    const STAFF_LOGIN = 1;
     
     private $authorization;
     private $DB_SCHEMA;
@@ -29,15 +29,15 @@ class staff {
     
     /**
      * Get any info about staff
-     * @param type USER_*
+     * @param type STAFF_*
      * @return type String/int
      */
     public function getInfo($key){
         switch($key){
-            case $this::USER_EMAIL:
+            case $this::STAFF_EMAIL:
                 return $_SESSION[$this->authorization->SESSION_USERS_TAG][Email];
                 break;
-            case $this::USER_LOGIN:
+            case $this::STAFF_LOGIN:
                 return $_SESSION[$this->authorization->SESSION_USERS_TAG][Login];
                 break;
         }
