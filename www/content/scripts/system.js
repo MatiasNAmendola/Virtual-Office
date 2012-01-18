@@ -3,120 +3,43 @@
  * Created by Mihael Isaev
  */
 
-/**
- * Authorization flag
- */
-auhorized = false;
 
-/**
- * On document ready function
- */
-$(document).ready(function(){
-    checkAuth();
-});
-
-/**
- * Ajax short method
- */
-ajax = {}
-ajax.run = function(params) {
-    if(params.json)
-        dataType = 'json';
-    else
-        dataType = 'html';
-    $.ajax({
-        async: true,
-        cache: false,
-        type: 'POST',
-        url: '/ajax.php',
-        data: params.data,
-        dataType: dataType,
-        beforeSend:function(){
-            if(params.showProgressBar)
-                showProgressBar();
-        },
-        success: function (data, textStatus, XMLHttpRequest) {
-            params.onSuccess(data);
-            if(params.showProgressBar)
-                setTimeout(function(){hideProgressBar();}, 1000);
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            if(params.showProgressBar)
-                hideProgressBar();
-            params.onError();
-            alert(textStatus);
-        }
-    });
-}
+system = {}
 
 /**
  * Interface loader
  */
-function loadInterface(){
-    if(authorized)
-        loadCabinet();
+system.loadInterface = function() {
+    if(auth.authorized)
+        system.loadCabinet();
     else
-        loadLogin();
-}
-
-/**
- * Authorization checker
- * @return boolean true/false
- */
-function checkAuth() {	
-    ajax.run({
-        data: ({module: 'system', action:'checkauth'}),
-        json: true,
-        showProgressBar: true,
-        onSuccess: function(data){
-            if(data.status !== 'Authorized')
-                authorized = false;
-            else
-                authorized = true;
-            loadInterface();
-        },
-        onError: function(){
-            authorized = false;
-            loadInterface();
-        }
-    });
-}
-
-/**
- * Shower for progress bar
- */
-function showProgressBar(){
-    if($('.progressBar').css('display')=='none')
-        $('.progressBar').fadeIn('fast');
-    if($('.modalBackground').css('display')=='none')
-        $('.modalBackground').fadeIn('fast');
-}
-
-/**
- * Hider for progress bar
- */
-function hideProgressBar(){
-    if($('.progressBar').css('display')=='block')
-        $('.progressBar').fadeOut('fast');
-    if($('.modalBackground').css('display')=='block')
-        $('.modalBackground').fadeOut('fast');
+        system.loadLogin();
 }
 
 /**
  * Load login html code
  */
-function loadLogin(){
+system.loadLogin = function() {
     ajax.run({
         data: ({module: 'html', action:'login'}),
         showProgressBar: true,
+        fast:true,
         onSuccess: function(data){
             $('.mainData').html(data);
             $('.loginForm').animate({top: 0}, 1000);
-            setTimeout(function(){$('.loginForm form').slideDown();}, 1200);
-            $('.loginForm .buttonEnter').bind('click', function(){login();});
+            setTimeout(function(){
+                $('.loginForm form').slideDown();
+            }, 1200);
+            $('.loginForm form').submit(function(){
+                auth.login();
+                return false;
+            });
+            $('.loginForm .buttonEnter').bind('click', function(){
+                auth.login();
+            });
             $('.loginForm form').keypress(function(){
                 if(event.keyCode == 13)
-                    login();
+                    auth.login();
             });
         }
     });
@@ -125,61 +48,99 @@ function loadLogin(){
 /**
  * Load cabinet html code
  */
-function loadCabinet(){
+system.loadCabinet = function() {
     ajax.run({
         data: ({module: 'html', action:'cabinet'}),
         showProgressBar: true,
+        fast:true,
         onSuccess: function(data){
             $('.mainData').html(data);
-            $('.head').animate({top: 0}, 1000);}
-    });
-}
-
-/**
- * Function for sign in office
- */
-function login(){
-    ajax.run({
-        data: ({module: 'system/anonymous', action:'login', login:$('.loginForm .email').val(), password:$('.loginForm .password').val()}),
-        json: true,
-        onSuccess: function(data){
-            if(data.status !== 'success'){
-                    if(data.login == '')
-                        $('.loginForm .email').css('background','#FFF');
-                    else
-                        $('.loginForm .email').css('background','#ffe4e4').focus();
-                    $('.loginForm .emailInfo').html(data.login);
-                    if(data.password == '')
-                        $('.loginForm .password').css('background','#FFF');
-                    else
-                        $('.loginForm .password').css('background','#ffe4e4').focus();
-                    $('.loginForm .passwordInfo').html(data.password);
-                }else
-                    checkAuth();
-        },
-        onError: function(){
-            authorized = false;
-            loadInterface();
+            $('.head').animate({top: 0}, 1000);
+            setTimeout(function(){
+                system.pageLoad('log', false, true);
+                system.resizeCabinetDivs();
+                system.showCabinetElements();
+            }, 800);
+            system.bindCabinet();
         }
     });
 }
 
-function Logout() {
-    if(dialog('выйти')){
-        $.ajax({
-            type: 'POST',
-            url: '/ajax.php',
-            data: ({module: 'system', action:'/logout'}),
-            dataType: 'json',
-            beforeSend:function(){ProgressBar('show');},
-            success: function (data, textStatus, XMLHttpRequest) {
-                if(data.status == 'LoggedOut'){
-                    Interface('Unauth');
-                }
-            }
-        });
-    }
+/**
+ * Resize cabinet div's
+ */
+system.resizeCabinetDivs = function() {
+    var headHeight = $('.office .head').outerHeight();
+    var footerHeight = $('.office .footer').outerHeight();
+    var windowHeight = $(window).height();
+    var pageHeight = windowHeight - footerHeight - headHeight - 50;
+    $('.office .page').css('height', pageHeight+'px');
 }
+
+/**
+ * Fade in elements for cabinet
+ */
+system.showCabinetElements = function() {
+    $('.office .head .user').fadeIn('slow');
+    $('.office .page').fadeIn('slow');
+    $('.office .footer').fadeIn('slow');
+}
+
+/**
+ * Bind functions on elements for cabinet
+ */
+system.bindCabinet = function() {
+    $('.office .head .logo .staff').click(function(){system.pageLoad('staff', true);});
+    $('.office .head .logo .log').click(function(){system.pageLoad('log', true);});
+    $('.office .head .logo .tasks').click(function(){system.pageLoad('tasks', true);});
+    $('.office .head .logo .settings').click(function(){system.pageLoad('settings', true);});
+    $('.office .head .logo .logout').click(function(){auth.logout();});
+    
+    $('.office .head .logo').click(function(){
+        $('.office .head .logo').addClass('active');
+        $('.office .head .logo ul').show();
+    });
+    $('.office .head .logo').mouseleave(function(){
+        $('.office .head .logo').removeClass('active');
+        $('.office .head .logo ul').hide();
+    });
+    $(window).resize(function(){system.resizeCabinetDivs();});
+}
+
+/**
+ * Load page staff
+ */
+system.pageLoad = function(page, showProgressBar, fast) {
+    ajax.run({
+        data: ({module: 'html', action:page}),
+        fast: fast,
+        showProgressBar: showProgressBar,
+        beforeSend: function(){$('.office .page').fadeOut('slow').html('');},
+        onSuccess: function(data){$('.office .page').html(data).fadeIn('slow');}
+    });
+}
+
+
+
+
+
+
+/**
+ * On document ready function
+ */
+$(document).ready(function(){
+    auth.check();
+});
+
+
+
+
+
+
+
+
+
+
 function ModalWindow(key,width,height,data){
     if(key=='show'){
         var marginLeft = width/2;
