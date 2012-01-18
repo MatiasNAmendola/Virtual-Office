@@ -25,3 +25,19 @@ function getTopCoordinateForCenterVertical(element){
         result = (heightWindow/2)-(heightElement/100*70);
     return result;
 }
+
+function StringBuffer()
+{
+  this.buffer = [];
+}
+
+StringBuffer.prototype.append = function(string) 
+{ 
+  this.buffer.push(string); 
+  return this; 
+} 
+
+StringBuffer.prototype.toString = function()
+{ 
+  return this.buffer.join(""); 
+}
