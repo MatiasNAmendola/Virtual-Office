@@ -1,9 +1,17 @@
+@font-face {
+	font-family: segoeui;
+	src: url('/content/fonts/segoeui.ttf');
+}
 body{
     padding:0;
     margin:0;
     width:100%;
     height:100%;
-    background: #8199c1;
+    background: url(/content/images/background/grass.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .mainData{
     display: block;
@@ -18,8 +26,7 @@ body{
 }
 .head{
     width:100%;
-    height:100px;
-    border-bottom:1px solid rgba(255,255,255,0.5);
+    height:100px;    
 }
 .loginForm{
     display:block;
@@ -30,7 +37,11 @@ body{
 }
 .loginForm .logo{
     position:relative;
-    background:url(/content/images/office.png);
+    font-family:segoeui;
+    font-size:60px;
+    text-align:center;
+    color:#FFFFFF;
+    background:rgba(255,255,255,0.5);
     width:400px;
     height:94px;
 }
@@ -38,16 +49,15 @@ body{
     display:none;
     width:400px;
     margin:0 auto;
-    background: transparent;
     font-family:Arial, sans-serif;
-    color:#2b2b2b;
-    background:#d8d8d8;
+    color:#FFF;
+    background:rgba(255,255,255,0.3);
 }
 .loginForm form .title{
     display:block;
     text-align:center;
     padding:5px 0;
-    color:#1e191d;
+    color:#FFF;
     font-family:Arial, sans-serif;
     font-size:14px;
     font-weight:bold;
@@ -64,6 +74,7 @@ body{
     outline:none;
     border:1px solid #b6b6b6;
     padding:2px 5px;
+    background:rgba(255,255,255,0.9);
 }
 .loginForm form .info{
     display:block;
@@ -76,9 +87,10 @@ body{
     padding:10px 0;
     text-align:center;
 }
+.loginForm .buttonEnter:hover{background:rgba(255,255,255,0.6);}
 .loginForm .buttonEnter{
     padding:5px 20px;
-    background:#2b2b2b;
+    background:rgba(255,255,255,0.3);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -87,9 +99,10 @@ body{
     cursor:pointer;
 }
 
+.loginForm .buttonForgot:hover{background:rgba(255,255,255,0.6);}
 .loginForm .buttonForgot{
     padding:5px 20px;
-    background:#2b2b2b;
+    background:rgba(255,255,255,0.3);
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -135,14 +148,133 @@ body{
 }
 .office .head{
     position:relative;
-    top:-94px;
+    top:-90px;
     width:100%;
-    height:94px;
-    background:#1e191d;
+    height:48px;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    /*background:#1e191d;*/
 }
-.office .logo{
+.office .head .logo:hover{
+    background:rgba(0,0,0,0.4);
+    cursor:pointer;
+}
+.office .head .logo{
     position:relative;
-    background:url(/content/images/office_text.png);
-    width:238px;
-    height:94px;
+    width:200px;
+    padding:0;
+}
+.office .head .logo .title{
+    display:block;
+    color:#FFF;
+    font-family:segoeui;
+    font-size:30px;
+    padding:4px 10px;
+}
+.office .head .logo ul li:hover{
+    background:rgba(0,0,0,0.4);
+}
+.office .head .logo ul li{
+    padding:4px 10px;
+}
+.office .head .logo ul{
+    display:none;
+    color:#EEEEEE;
+    font-family:Arial, sans-serif;
+    font-size:12px;
+    width:100%;
+    margin:0;
+    padding:0;
+    list-style: none;
+    background:rgba(0,0,0,0.6);
+}
+
+
+.office .head .user{
+    display:none;
+    float:right;
+}
+.office .head .user .title{
+    display:block;
+    color:#FFF;
+    font-family:Arial, sans-serif;
+    font-size:12px;
+    padding:4px 10px;
+    cursor:default;
+}
+
+.office .page{
+    display:none;
+    height:100%;
+    height:500px;
+}
+.office .page .left{
+    float:left;
+    width:200px;
+}
+.office .page .title{
+    font-family:segoeui;
+    font-size:25px;
+    color:#FFF;
+    margin:0;
+    padding:8px 0 0 20px;
+    height:40px;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+}
+.office .page .left ul{
+    display:block;
+    margin:0;
+    padding:10px 0 0 0;
+    list-style:none;
+    color:#FFF;
+    font-family:segoeui;
+    font-size:14px;
+}
+.office .page .left ul li.active{
+    border-left:2px solid rgba(243,243,243,0.85);
+    cursor:default;
+}
+.office .page .left ul li:hover{
+    background:rgba(0,0,0,0.4);
+    cursor:pointer;
+}
+.office .page .left ul li{
+    border-left:2px solid transparent;
+    padding: 5px 0 5px 10px;
+}
+.office .page .right{
+    margin:0 0 10px 200px;
+    background-color:rgba(243,243,243,0.85);
+    height:100%;
+    /* Firefox */
+    width: -moz-calc(100% - 210px);
+    /* WebKit */
+    width: -webkit-calc(100% - 210px);
+    /* Opera */
+    width: -o-calc(100% - 210px);
+    /* Standard */
+    width: calc(100% - 210px);
+    overflow:auto;
+}
+.office .footer{
+    display:none;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:30px;
+    clear:both;
+    color:#EEEEEE;
+    text-align:center;
+    padding:10px 0;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
