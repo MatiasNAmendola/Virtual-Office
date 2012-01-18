@@ -5,19 +5,19 @@
  */
 ?>
 <div class="loginForm">
-    <div class="logo"></div>
+    <div class="logo">Office</div>
     <form>
         <span class="title">Вход в офис</span>
         <table>
             <tr>
-                <td class="right"><?=$L[label][Email];?></td>
+                <td class="right" valign="top"><?=$L[label][Email];?></td>
                 <td class="left">
                     <input type="text" class="email">
                     <span class="info emailInfo"></span>
                 </td>
             </tr>
             <tr>
-                <td class="right"><?=$L[label][Password];?></td>
+                <td class="right" valign="top"><?=$L[label][Password];?></td>
                 <td class="left">
                     <input type="password" class="password">
                     <span class="info passwordInfo"></span>
