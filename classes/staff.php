@@ -6,25 +6,28 @@
  * @author Mihael Isaev
  */
 class staff {
-    const STAFF_EMAIL = 0;
-    const STAFF_LOGIN = 1;
+    const STAFF_EMAIL      = 0;
+    const STAFF_LOGIN      = 1;
+    const STAFF_FIRSTNAME  = 2;
+    const STAFF_SECONDNAME = 3;
+    const STAFF_THIRDNAME  = 4;
     
-    private $authorization;
-    private $DB_SCHEMA;
+    private $AUTHORIZATION;
+    private $DBSCHEMA;
     private $DB;
     public  $SESSION_USERS_TAG;
-    public  $ORGANIZATION_ID;
+    public  $IDORGANIZATION;
     
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->authorization = new authorization();
-        $this->DB_SCHEMA = new dbSchema();
+        $this->AUTHORIZATION = new authorization();
+        $this->DBSCHEMA = new dbSchema();
         $this->DB = new mysqliDB();
-        $this->SESSION_USERS_TAG = $this->DB_SCHEMA->TABLE_USERS;
-        $this->ORGANIZATION_ID = $SESSION[$this->SESSION_USERS_TAG][IdOrganization];
+        $this->SESSION_USERS_TAG = $this->DBSCHEMA->TABLE_USERS;
+        $this->IDORGANIZATION = $SESSION[$this->SESSION_USERS_TAG][IdOrganization];
     }
     
     /**
@@ -35,26 +38,54 @@ class staff {
     public function getInfo($key){
         switch($key){
             case $this::STAFF_EMAIL:
-                return $_SESSION[$this->authorization->SESSION_USERS_TAG][Email];
+                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][Email];
                 break;
             case $this::STAFF_LOGIN:
-                return $_SESSION[$this->authorization->SESSION_USERS_TAG][Login];
+                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][Login];
+                break;
+            case $this::STAFF_FIRSTNAME:
+                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameFirst];
+                break;
+            case $this::STAFF_SECONDNAME:
+                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameSecond];
+                break;
+            case $this::STAFF_THIRDNAME:
+                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameThird];
                 break;
         }
     }
     
     /**
-     * Add new department 
+     * Add new department
+     * @return boolean true/false
      */
     public function addDepartment($name){
-        
+        $result = $db->insert("INSERT INTO ".$this->DBSCHEMA->TABLE_DEPARTMENTS
+                             ." (".$this->DBSCHEMA->CELL_DEPARTMENTS_IDORGANIZATION
+                             .", ".$this->DBSCHEMA->CELL_DEPARTMENTS_NAME
+                             .") VALUES (?,?)", 
+                             $this->IDORGANIZATION,
+                             $name);
+        if(!$result)
+            return false;
+        else
+            return true;
     }
     
     /**
      * Add new post 
      */
     public function addPost($name){
-        
+        $result = $db->insert("INSERT INTO ".$this->DBSCHEMA->TABLE_POSTS
+                             ." (".$this->DBSCHEMA->CELL_POSTS_IDORGANIZATION
+                             .", ".$this->DBSCHEMA->CELL_POSTS_NAME
+                             .") VALUES (?,?)", 
+                             $this->IDORGANIZATION,
+                             $name);
+        if(!$result)
+            return false;
+        else
+            return true;
     }
     
     /**
