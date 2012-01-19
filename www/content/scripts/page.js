@@ -28,7 +28,7 @@ page.load = function(page, showProgressBar, fast) {
         onSuccess: function(data){
             $('.office .page').html(data).fadeIn('slow');
             binder.page(page);
-            //html.page(page);
+            html.page(page);
         }
     });
 }

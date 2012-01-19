@@ -38,20 +38,27 @@ html.showCabinet = function(){
     setTimeout(function(){
         page.load('tasks', false, true);
         binder.page('cabinet');
-        html.resizeCabinetDivs();
+        html.page('cabinet');
         $('.office .head .user').fadeIn('slow');
         $('.office .page').fadeIn('slow');
         $('.office .footer').fadeIn('slow');
     }, 800);
 }
 
-/**
- * Resize cabinet div's
- */
-html.resizeCabinetDivs = function() {
-    var headHeight = $('.office .head').outerHeight();
-    var footerHeight = $('.office .footer').outerHeight();
-    var windowHeight = $(window).height();
-    var pageHeight = windowHeight - footerHeight - headHeight - 50;
-    $('.office .page').css('height', pageHeight+'px');
+html.page = function(key){
+    switch(key){
+        case 'cabinet':
+            var headHeight = $('.office .head').outerHeight();
+            var footerHeight = $('.office .footer').outerHeight();
+            var windowHeight = $(window).height();
+            var pageHeight = windowHeight - footerHeight - headHeight - 50;
+            $('.office .page').css('height', pageHeight+'px');
+            break;
+        case 'tasks':
+            var rightHeight = $('.office .page .right').outerHeight();
+            var titleHeight = $('.office .page .right .completed .title').innerHeight();
+            var dataHeight = rightHeight-titleHeight;
+            $('.office .page .right .data').css('height',dataHeight+'px');
+            break;
+    }
 }
