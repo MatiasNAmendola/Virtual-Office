@@ -278,3 +278,66 @@ body{
 ::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
+
+
+
+/* Tasks */
+.office .page .right .planned{
+    display:block;
+    float:left;
+    width:33%;
+    height:100%;
+    background:rgba(119,207,229,0.4);
+    overflow:hidden;
+}
+.office .page .right .current{
+    display:block;
+    float:left;
+    width:34%;
+    height:100%;
+    background:rgba(225,229,119,0.4);
+    overflow:hidden;
+}
+.office .page .right .completed{
+    display:block;
+    float:left;
+    width:33%;
+    height:100%;
+    background:rgba(119,229,140,0.4);
+    overflow:hidden;
+}
+.office .page .right .data{
+    display:block;
+    width:100%;
+    overflow-y: auto;
+    overflow-x:hidden;
+    height:90%;
+}
+.office .page .right .task{
+    display:block;
+    float:left;
+    width:100px;
+    height:100px;
+    background:rgba(255,255,255,0.6);
+    cursor:default;
+    margin:5px;
+    padding:10px 5px 5px 5px;
+}
+.office .page .right .task .text{
+    font-family:segoeui;
+    font-size:12px;
+    border:1px solid rgba(243,243,243,0.4);
+    cursor:default;
+}
+.office .page .right .task .text textarea{
+    width:90px;
+    height:85px;
+    outline:none;
+    resize:none;
+    font-family:segoeui;
+    font-size:12px;
+    background:rgba(255,255,255,0.4);
+    border:1px solid rgba(243,243,243,0.4);
+    cursor:default;
+}
+/* End - Tasks */

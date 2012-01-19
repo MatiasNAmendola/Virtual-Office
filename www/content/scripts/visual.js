@@ -4,6 +4,7 @@
  * Created by Mihael Isaev
  */
 
+
 /**
  * Ajax short method
  */

@@ -3,6 +3,17 @@
  * Created by Mihael Isaev
  */
 
+/**
+ * Include child scripts
+ */
+$.include('/content/scripts/visual.js');
+$.include('/content/scripts/ajax.js');
+$.include('/content/scripts/helper.js');
+$.include('/content/scripts/binder.js');
+$.include('/content/scripts/page.js');
+$.include('/content/scripts/html.js');
+$.include('/content/scripts/auth.js');
+
 
 system = {}
 
@@ -25,22 +36,9 @@ system.loadLogin = function() {
         showProgressBar: true,
         fast:true,
         onSuccess: function(data){
-            $('.mainData').html(data);
-            $('.loginForm').animate({top: 0}, 1000);
-            setTimeout(function(){
-                $('.loginForm form').slideDown();
-            }, 1200);
-            $('.loginForm form').submit(function(){
-                auth.login();
-                return false;
-            });
-            $('.loginForm .buttonEnter').bind('click', function(){
-                auth.login();
-            });
-            $('.loginForm form').keypress(function(){
-                if(event.keyCode == 13)
-                    auth.login();
-            });
+            html.setMainData(data);
+            html.slideDownLoginForm();
+            binder.loginForm();
         }
     });
 }
@@ -54,76 +52,12 @@ system.loadCabinet = function() {
         showProgressBar: true,
         fast:true,
         onSuccess: function(data){
-            $('.mainData').html(data);
-            $('.head').animate({top: 0}, 1000);
-            setTimeout(function(){
-                system.pageLoad('log', false, true);
-                system.resizeCabinetDivs();
-                system.showCabinetElements();
-            }, 800);
-            system.bindCabinet();
+            html.setMainData(data);
+            html.slideDownCabinetHead();
+            html.showCabinet();
         }
     });
 }
-
-/**
- * Resize cabinet div's
- */
-system.resizeCabinetDivs = function() {
-    var headHeight = $('.office .head').outerHeight();
-    var footerHeight = $('.office .footer').outerHeight();
-    var windowHeight = $(window).height();
-    var pageHeight = windowHeight - footerHeight - headHeight - 50;
-    $('.office .page').css('height', pageHeight+'px');
-}
-
-/**
- * Fade in elements for cabinet
- */
-system.showCabinetElements = function() {
-    $('.office .head .user').fadeIn('slow');
-    $('.office .page').fadeIn('slow');
-    $('.office .footer').fadeIn('slow');
-}
-
-/**
- * Bind functions on elements for cabinet
- */
-system.bindCabinet = function() {
-    $('.office .head .logo .staff').click(function(){system.pageLoad('staff', true);});
-    $('.office .head .logo .log').click(function(){system.pageLoad('log', true);});
-    $('.office .head .logo .tasks').click(function(){system.pageLoad('tasks', true);});
-    $('.office .head .logo .settings').click(function(){system.pageLoad('settings', true);});
-    $('.office .head .logo .logout').click(function(){auth.logout();});
-    
-    $('.office .head .logo').click(function(){
-        $('.office .head .logo').addClass('active');
-        $('.office .head .logo ul').show();
-    });
-    $('.office .head .logo').mouseleave(function(){
-        $('.office .head .logo').removeClass('active');
-        $('.office .head .logo ul').hide();
-    });
-    $(window).resize(function(){system.resizeCabinetDivs();});
-}
-
-/**
- * Load page staff
- */
-system.pageLoad = function(page, showProgressBar, fast) {
-    ajax.run({
-        data: ({module: 'html', action:page}),
-        fast: fast,
-        showProgressBar: showProgressBar,
-        beforeSend: function(){$('.office .page').fadeOut('slow').html('');},
-        onSuccess: function(data){$('.office .page').html(data).fadeIn('slow');}
-    });
-}
-
-
-
-
-
 
 /**
  * On document ready function
