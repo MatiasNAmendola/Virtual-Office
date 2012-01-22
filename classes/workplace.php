@@ -39,7 +39,7 @@ class workplace{
      * @return array workplaces is room
      */
     public function getWorkplacesIsRoom($room){
-        $result = $db->selectRow('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDROOM.' = ?', $room);
+        $result = $db->select('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDROOM.' = ?', $room);
 
         if(!$result)
             return false;

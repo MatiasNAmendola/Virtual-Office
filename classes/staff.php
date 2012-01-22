@@ -100,7 +100,7 @@ class staff {
      * @return array workplaces
      */
     public function getRooms($staff){
-        $result = $db->selectRow('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ?', $staff);
+        $result = $db->select('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ?', $staff);
 
         if(!$result)
             return false;
