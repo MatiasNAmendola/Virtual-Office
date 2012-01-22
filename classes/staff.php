@@ -96,7 +96,7 @@ class staff {
     }
     
     /**
-     * Get rooms is staff
+     * Get nubmer rooms (all workplace) is staff
      * @return array workplaces
      */
     public function getRooms($staff){
@@ -106,6 +106,18 @@ class staff {
             return false;
         else
             return $result;
+    }
+    /**
+     * Function for check belonging to the room
+     * @return true/false
+     */
+    public function isRoom($staff,$room){
+        $result = $db->select('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ? AND '.$this->DBSCHEMA->CELL_WORKPLACE_IDROOM.' = ?', $staff,$room);
+       
+        if(!$result)
+            return false;
+        else
+            return true;
     }
 }
 
