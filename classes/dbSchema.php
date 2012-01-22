@@ -20,4 +20,12 @@ class dbSchema
     public $TABLE_POSTS = 'posts';
     public $CELL_POSTS_IDORGANIZATION    = 'IdOrganization';
     public $CELL_POSTS_NAME              = 'Name';
+    
+    public $TABLE_ROOMS = 'rooms';
+    public $CELL_ROOMS_NAME = 'Name';
+    public $CELL_ROOMS_PARENT = 'Parent';
+        
+    public $TABLE_WORKPLACE = 'rooms';
+    public $CELL_WORKPLACE_IDROOM = 'IdRoom';
+    public $CELL_WORKPLACE_IDSTAFF = 'IdStaff';
 }
