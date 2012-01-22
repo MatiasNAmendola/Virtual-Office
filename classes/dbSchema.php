@@ -25,7 +25,7 @@ class dbSchema
     public $CELL_ROOMS_NAME = 'Name';
     public $CELL_ROOMS_PARENT = 'Parent';
         
-    public $TABLE_WORKPLACE = 'rooms';
+    public $TABLE_WORKPLACE = 'workplace';
     public $CELL_WORKPLACE_IDROOM = 'IdRoom';
     public $CELL_WORKPLACE_IDSTAFF = 'IdStaff';
 }
