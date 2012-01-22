@@ -22,7 +22,7 @@ class workplace{
     /**
      * Add new workplace 
      */
-    public function addRoom($room,$staff){
+    public function addWorkplace($room,$staff){
         $result = $db->insert("INSERT INTO ".$this->DBSCHEMA->TABLE_WORKPLACE
                              ." (".$this->DBSCHEMA->CELL_WORKPLACE_IDROOM
                              .", ".$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF
@@ -33,6 +33,18 @@ class workplace{
             return false;
         else
             return true;
+    }
+    /**
+     * Get array of strings workplaces is room
+     * @return array workplaces is room
+     */
+    public function getWorkplacesIsRoom($room){
+        $result = $db->selectRow('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDROOM.' = ?', $room);
+
+        if(!$result)
+            return false;
+        else
+            return $result;
     }
 }
 ?>
