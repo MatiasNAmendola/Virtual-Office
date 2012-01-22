@@ -13,17 +13,19 @@ class room{
     public  $IDORGANIZATION;
     public function __construct()
     {
-        $this->AUTHORIZATION = new authorization();
+      //  $this->AUTHORIZATION = new authorization();
         $this->DBSCHEMA = new dbSchema();
         $this->DB = new mysqliDB();
-        $this->SESSION_USERS_TAG = $this->DBSCHEMA->TABLE_USERS;
+      //  $this->SESSION_USERS_TAG = $this->DBSCHEMA->TABLE_USERS;
        // $this->IDORGANIZATION = $SESSION[$this->SESSION_USERS_TAG][IdOrganization];
     }
     /**
      * Add new room 
      */
     public function addRoom($name,$parent){
-        $result = $db->insert("INSERT INTO ".$this->DBSCHEMA->TABLE_ROOMS
+       // return $this->DBSCHEMA->CELL_ROOMS_PARENT;
+        
+        $result = $this->DB->insert("INSERT INTO ".$this->DBSCHEMA->TABLE_ROOMS
                              ." (".$this->DBSCHEMA->CELL_ROOMS_NAME
                              .", ".$this->DBSCHEMA->CELL_ROOMS_PARENT
                              .") VALUES (?,?)", 
@@ -33,6 +35,8 @@ class room{
             return false;
         else
             return true;
+         
+         
     }
 }
 ?>
