@@ -107,10 +107,13 @@ class staff {
         else
             return $result;
     }
+    
     /**
      * Function for check belonging to the room
-     * @return true/false
-     */
+     * @param integer $staff
+     * @param integer $room
+     * @return boolean true/false
+     */    
     public function isRoom($staff,$room){
         $result = $db->select('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ? AND '.$this->DBSCHEMA->CELL_WORKPLACE_IDROOM.' = ?', $staff,$room);
        
