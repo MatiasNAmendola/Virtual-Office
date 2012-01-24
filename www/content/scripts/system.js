@@ -21,10 +21,16 @@ system = {}
  * Interface loader
  */
 system.loadInterface = function() {
-    if(auth.authorized)
-        system.loadCabinet();
-    else
-        system.loadLogin();
+    var namepage=page.getNamePageFromHash();
+    
+    if (!namepage) {
+        if(auth.authorized)
+            system.loadCabinet();
+        else
+            system.loadLogin();
+    } else {
+        
+    }    
 }
 
 /**
