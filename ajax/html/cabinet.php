@@ -19,12 +19,10 @@ $staff = new staff();
         <div class="logo">
             <div class="title">Office</div>
             <ul>
-                <li class="staff">Сотрудники</li>
-                <li class="log">Журнал</li>
-                <li class="tasks">Задачи</li>
-                <li class="settings">Настройки</li>
+                <li class="dashboard">Кабинет</li>
                 <li class="logout">Выход</li>
-            </ul></div>
+            </ul>
+        </div>
     </div>
     <div class="page"></div>
     <div class="footer">
