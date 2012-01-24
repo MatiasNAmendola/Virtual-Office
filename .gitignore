@@ -1,3 +1,5 @@
 /logs/
 /nbproject/private/
 /nbproject/
+/www/test.php
+/classes/mysqliDB.php
