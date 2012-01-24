@@ -7,6 +7,7 @@
 page = {}
 
 var MODULE_HTML = 'html';
+var HASH_PREFIX = '#';
 
 /**
  * Loader pages
@@ -31,4 +32,21 @@ page.load = function(page, showProgressBar, fast) {
             html.page(page);
         }
     });
+}
+/**
+ * Get name page from hash
+ * @param hash string (optional)
+ * @return - name page
+ */
+page.getNamePageFromHash = function(hash) {
+    var result=false;
+    if (!hash) hash=window.location.hash;
+    hash=hash.replace(HASH_PREFIX, "");
+    
+    switch (hash) {
+        case '1':
+            result='testpage';
+        break;
+    }
+    return result;
 }
