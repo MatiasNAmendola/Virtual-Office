@@ -11,6 +11,7 @@ class staff {
     const STAFF_FIRSTNAME  = 2;
     const STAFF_SECONDNAME = 3;
     const STAFF_THIRDNAME  = 4;
+    const STAFF_FULLNAME   = 5;
     
     private $AUTHORIZATION;
     private $DBSCHEMA;
@@ -37,20 +38,29 @@ class staff {
      */
     public function getInfo($key){
         switch($key){
-            case $this::STAFF_EMAIL:
+            case self::STAFF_EMAIL:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][Email];
                 break;
-            case $this::STAFF_LOGIN:
+            case self::STAFF_LOGIN:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][Login];
                 break;
-            case $this::STAFF_FIRSTNAME:
+            case self::STAFF_FIRSTNAME:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameFirst];
                 break;
-            case $this::STAFF_SECONDNAME:
+            case self::STAFF_SECONDNAME:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameSecond];
                 break;
-            case $this::STAFF_THIRDNAME:
+            case self::STAFF_THIRDNAME:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameThird];
+                break;
+            case self::STAFF_FULLNAME:
+                $stringBuffer = new StringBuffer();
+                $stringBuffer->append($this->getInfo(self::STAFF_FIRSTNAME));
+                $stringBuffer->append('&nbsp;');
+                $stringBuffer->append($this->getInfo(self::STAFF_SECONDNAME));
+                $stringBuffer->append('&nbsp;');
+                $stringBuffer->append($this->getInfo(self::STAFF_THIRDNAME));
+                return $stringBuffer->toString();
                 break;
         }
     }
