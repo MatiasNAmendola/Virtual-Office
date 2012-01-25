@@ -1,0 +1,108 @@
+@import url("/content/css/office.css");
+/* 
+    Document   : cabinet
+    Created on : 25.01.2012, 3:57:40
+    Author     : Mihael
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.office{
+    width:100%;
+    min-height:100%;
+}
+.office .head{
+    position:relative;
+    top:-90px;
+    width:100%;
+    height:48px;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    /*background:#1e191d;*/
+}
+.office .head .logo:hover{
+    background:rgba(0,0,0,0.4);
+    cursor:pointer;
+}
+.office .head .logo{
+    position:relative;
+    width:200px;
+    padding:0;
+}
+.office .head .logo .title{
+    display:block;
+    color:#FFF;
+    font-family:segoeui;
+    font-size:30px;
+    padding:4px 10px;
+}
+.office .head .logo ul li:hover{
+    background:rgba(0,0,0,0.4);
+}
+.office .head .logo ul li{
+    padding:4px 10px;
+}
+.office .head .logo ul{
+    display:none;
+    color:#EEEEEE;
+    font-family:Arial, sans-serif;
+    font-size:12px;
+    width:100%;
+    margin:0;
+    padding:0;
+    list-style: none;
+    background:rgba(0,0,0,0.6);
+}
+
+
+.office .head .user{
+    display:none;
+    float:right;
+}
+.office .head .user .title{
+    display:block;
+    color:#FFF;
+    font-family:Arial, sans-serif;
+    font-size:12px;
+    padding:4px 10px;
+    cursor:default;
+    float:right;
+}
+
+.office .head .user .currentOffice.active{
+    background:rgba(0,0,0,0.4);
+    cursor:default;
+}
+.office .head .user .currentOffice:hover{
+    background:rgba(0,0,0,0.4);
+    cursor:pointer;
+}
+.office .head .user .currentOffice{
+    display:block;
+    color:#FFF;
+    font-family:Arial, sans-serif;
+    font-size:12px;
+    padding:0;
+    cursor:default;
+    float:left;
+    min-width:200px;
+    text-align:center;
+}
+
+.office .head .user .currentOffice .current{
+    padding:4px 10px;
+}
+
+.office .head .user .currentOffice ul{
+    list-style:none;
+    display:none;
+    margin:0;
+    padding:0;
+    background:rgba(0,0,0,0.6);
+}
+
+.office .head .user .currentOffice ul li:hover{
+    background:rgba(0,0,0,0.4);
+}
+.office .head .user .currentOffice ul li{
+    padding:4px 10px;
+}
