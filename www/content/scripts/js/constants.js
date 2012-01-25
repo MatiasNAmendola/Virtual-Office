@@ -6,6 +6,8 @@
 
 
 constants = {
+    PAGE_WIZARD: 'wizard',
+    
     ACTION_LOGOUT: 'logout',
     ACTION_LOGIN: 'login',
     ACTION_CHECK_AUTH: 'checkauth',
@@ -35,6 +37,9 @@ constants = {
     STATUS_LOGIN_LOGGED_OUT: 'LoggedOut',
     
     MODULE_HTML: 'html',
+    MODULE_HTML_AREA: 'html/area',
+    MODULE_HTML_GLOBAL_AREA: 'html/global_area',
+    MODULE_HTML_WIZARD: 'html/wizard',
     MODULE_SYSTEM: 'system',
     
     SECTION_DASHBOARD: 'dashboard',
@@ -62,6 +67,8 @@ constants = {
     EL_OFFICE_PAGE_RIGHT_HS_ITEM: '.office .page .right .horisontalScroll .item',
     EL_OFFICE_FOOTER: '.office .footer',
     EL_OFFICE_HEAD_USER: '.office .head .user',
+    EL_OFFICE_HEAD_CURRENT_OFFICE: '.office .head .currentOffice',
+    EL_OFFICE_HEAD_CURRENT_OFFICE_MENU_ITEM: '.office .head .currentOffice ul li',
     EL_OFFICE_HEAD_LOGO: '.office .head .logo',
     EL_OFFICE_HEAD_LOGO_MENU: '.office .head .logo ul',
     EL_OFFICE_HEAD_LOGO_MENU_ITEM: '.office .head .logo ul li',

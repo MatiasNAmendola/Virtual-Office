@@ -21,9 +21,9 @@ system = {}
  */
 system.loadInterface = function() {
     if(auth.authorized)
-        html.loadArea(constants.AREA_CABINET);
+        html.loadArea(constants.GLOBAL_AREA_CABINET);
     else
-        html.loadArea(constants.AREA_LOGIN);
+        html.loadArea(constants.GLOBAL_AREA_LOGIN);
 }
 
 system.dialog = function(subjm){
