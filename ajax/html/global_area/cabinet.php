@@ -4,17 +4,21 @@
  * Office main html
  */
 $staff = new staff();
+$office = new office();
 ?>
 <div class="office">
     <div class="head">
         <div class="user">
             <div class="currentOffice">
                 <div class="current">
-                    <?=$staff->getInfo($staff::STAFF_FULLNAME);?>
+                    <?
+                        $curentOffice = $office->getCurrentOfficeInfo();
+                        echo $curentOffice[Name];
+                    ?>
                 </div>
                 <ul>
-                    <li>Создать офис</li>
-                    <li>Найти работу</li>
+                    <li class="createOffice">Создать офис</li>
+                    <li class="searchJob">Найти работу</li>
                 </ul>
             </div>
             <div class="title">

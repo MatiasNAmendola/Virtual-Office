@@ -7,10 +7,13 @@
 <div class="title">Настройки</div>
 <div class="left">
     <ul>
-        <li class="active">Компания</li>
-        <li>Личные</li>
+        <li class="global active">Глобальные</li>
     </ul>
 </div>
 <div class="right">
-    Здесь будут настройки :)
+    <div class="verticalScroll">
+        <div class="verticalItem">
+            <?include('settings/global.php');?>
+        </div>
+    </div>
 </div>

@@ -4,64 +4,20 @@
  * Staff list
  */
 ?>
-<div class="title">Сотрудники</div>
+<div class="title">Компания</div>
 <div class="left">
     <ul>
-        <li class="list active">Алфавитный список</li>
-        <li class="add">Добавить сотрудника</li>
+        <li class="item1 active">Пункт1</li>
+        <li class="item2">Пункт2</li>
     </ul>
 </div>
 <div class="right">
-    <table>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-        <tr><td>1</td><td>тест</td></tr>
-    </table>
+    <div class="verticalScroll">
+        <div class="verticalItem">
+            <?include('company/item1.php');?>
+        </div>
+        <div class="verticalItem">
+            <?include('company/item2.php');?>
+        </div>
+    </div>
 </div>
