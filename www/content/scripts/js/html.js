@@ -4,6 +4,10 @@
  * Created by Mihael Isaev
  */
 
+$.include('/content/scripts/js/jquery-ui-1.8.17.custom.min.js');
+$.include('/content/scripts/js/visual.js');
+$.include('/content/scripts/js/ajax.js');
+$.include('/content/scripts/js/helper.js');
 
 html = {}
 

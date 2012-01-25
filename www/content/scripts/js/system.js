@@ -6,12 +6,9 @@
 /**
  * Include child scripts
  */
-$.include('/content/scripts/constants.js');
-$.include('/content/scripts/visual.js');
-$.include('/content/scripts/ajax.js');
-$.include('/content/scripts/helper.js');
-$.include('/content/scripts/html.js');
-$.include('/content/scripts/auth.js');
+$.include('/content/scripts/js/constants.js');
+$.include('/content/scripts/js/html.js');
+$.include('/content/scripts/js/auth.js');
 
 
 system = {}
