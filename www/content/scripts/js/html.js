@@ -201,6 +201,9 @@ html.bind = function(key){
 }
 
 html.resizeSectionRight = function(){
+    var windowWidth = $(window).width();
+    var newRightWidth = windowWidth-400;
+    $(constants.EL_OFFICE_PAGE_RIGHT).css('width',newRightWidth+'px');
     var rightWidth = $(constants.EL_OFFICE_PAGE_RIGHT).width();
     var rightHeight = $(constants.EL_OFFICE_PAGE_RIGHT).height();
     var topMenuHeight = $(constants.EL_OFFICE_PAGE_RIGHT_TOP_MENU).outerHeight();

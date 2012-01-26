@@ -23,8 +23,12 @@ system.loadInterface = function() {
         html.loadArea(constants.GLOBAL_AREA_LOGIN);
 }
 
-system.dialog = function(subjm){
-    if(confirm(constants.TEXT_CONFIRM+subjm+constants.TEXT_CONFIRM_INTERROGATION))
+system.dialog = function(message){
+    StringBuffer = new StringBuffer();
+    StringBuffer.append(constants.TEXT_CONFIRM);
+    StringBuffer.append(message);
+    StringBuffer.append(constants.TEXT_CONFIRM_INTERROGATION);
+    if(confirm(StringBuffer.toString()))
         return true;
     else
         return false;
