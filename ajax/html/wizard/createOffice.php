@@ -4,8 +4,10 @@
  * Dashboard html
  */
 ?>
-<div class="title">Мастер создания офиса</div>
-<div class="right">
+<div class="title center">Мастер создания офиса</div>
+<div class="wizard">
+    somedata
+    <!--
     <div class="verticalScroll">
         <div class="verticalItem">
             <ul class="topMenu">
@@ -20,4 +22,5 @@
             </div>
         </div>
     </div>
+    -->
 </div>

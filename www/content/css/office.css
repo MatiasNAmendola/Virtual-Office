@@ -15,6 +15,10 @@
     float:left;
     width:200px;
 }
+.office .page .title.center{
+    width:100%;
+    text-align:center;
+}
 .office .page .title{
     font-family:segoeui;
     font-size:25px;
@@ -49,14 +53,6 @@
     margin:0 0 10px 200px;
     background-color:rgba(250,250,250,0.6);
     height:100%;
-    /* Firefox */
-    width: -moz-calc(100% - 210px);
-    /* WebKit */
-    width: -webkit-calc(100% - 210px);
-    /* Opera */
-    width: -o-calc(100% - 210px);
-    /* Standard */
-    width: calc(100% - 210px);
     overflow:hidden;
 }
 

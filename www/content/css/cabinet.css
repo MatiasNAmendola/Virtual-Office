@@ -1,4 +1,5 @@
 @import url("/content/css/office.css");
+@import url("/content/css/wizard.css");
 /* 
     Document   : cabinet
     Created on : 25.01.2012, 3:57:40
@@ -10,6 +11,7 @@
 .office{
     width:100%;
     min-height:100%;
+    overflow:hidden;
 }
 .office .head{
     position:relative;
