@@ -1,33 +1,39 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of office
+ * Class office
  *
- * @author Mihael
+ * @author Alexandr Forofontov
  */
-class office {
+class office{
     
-    private $AUTHORIZATION;
     private $DBSCHEMA;
     private $DB;
     
-    public function __construct() {
-        $this->AUTHORIZATION = new authorization();
+    public function __construct()
+    {
         $this->DBSCHEMA = new dbSchema();
         $this->DB = new mysqliDB();
-        $this->SESSION_USERS_TAG = $this->DBSCHEMA->TABLE_USERS;
     }
-    
-    public function getCurrentOfficeInfo(){
-        return $this->DB->selectRow("SELECT * FROM office WHERE Id=?",1);
+    /**
+     * Add new office 
+     * @param String $name
+     * @param Integer $date (unix time)
+     * @return boolean 
+     */
+    public function addOffice($name,$date){
+       $result = $this->DB->insert("INSERT INTO ".$this->DBSCHEMA->TABLE_OFFICE
+                             ." (".$this->DBSCHEMA->CELL_OFFICE_NAME
+                             .", ".$this->DBSCHEMA->CELL_OFFICE_DATEREGISTER
+                             .") VALUES (?,?)", 
+                             $name,
+                             $date);
+        if(!$result)
+            return false;
+        else
+            return true;
+         
+         
     }
-    
-        
 }
-
 ?>

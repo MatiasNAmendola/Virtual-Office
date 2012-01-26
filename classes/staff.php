@@ -104,6 +104,53 @@ class staff {
     public function addStaff(){
         
     }
+    /**
+     * Get all workplace is staff
+     * @param integer $staff 
+     * @return array workplaces
+     */
+    public function getCountWorkplace($staff){
+        $result = $this->DB->select('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ?', $staff);
+
+        if(!$result)
+            return false;
+        else
+            return $result;
+    }
+    
+    /**
+     * Get workplace info by ID
+     * @param integer $workplace 
+     * @return array workplace
+     */
+    public function getWorkplaceInfoById($workplace){
+        $result = $this->DB->selectRow('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ?', $staff);
+
+        if(!$result)
+            return false;
+        else
+            return $result;
+    }
+    /**
+     * Set "Id" current workplace 
+     * @param integer $staff 
+     * @param integer $workplace 
+     * @return boolean
+     */
+    public function setCurrentWorkplaceId($staff,$workplace) {
+        if (!$staff) return false;
+        if (!$workplace) return false;
+        $_SESSION[$staff]['CurrentWorkplace']=$workplace;
+        return true;
+    }
+    /**
+     * Get "Id" current workplace 
+     * @param integer $staff 
+     * @return integer - Id
+     */
+    public function getCurrentWorkplaceId($staff) {
+        return $_SESSION[$staff]['CurrentWorkplace'];
+    }
 }
 
 ?>
