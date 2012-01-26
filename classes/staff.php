@@ -11,6 +11,7 @@ class staff {
     const STAFF_FIRSTNAME  = 2;
     const STAFF_SECONDNAME = 3;
     const STAFF_THIRDNAME  = 4;
+    const STAFF_FULLNAME   = 5;
     
     private $AUTHORIZATION;
     private $DBSCHEMA;
@@ -37,20 +38,29 @@ class staff {
      */
     public function getInfo($key){
         switch($key){
-            case $this::STAFF_EMAIL:
+            case self::STAFF_EMAIL:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][Email];
                 break;
-            case $this::STAFF_LOGIN:
+            case self::STAFF_LOGIN:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][Login];
                 break;
-            case $this::STAFF_FIRSTNAME:
+            case self::STAFF_FIRSTNAME:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameFirst];
                 break;
-            case $this::STAFF_SECONDNAME:
+            case self::STAFF_SECONDNAME:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameSecond];
                 break;
-            case $this::STAFF_THIRDNAME:
+            case self::STAFF_THIRDNAME:
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameThird];
+                break;
+            case self::STAFF_FULLNAME:
+                $stringBuffer = new StringBuffer();
+                $stringBuffer->append($this->getInfo(self::STAFF_FIRSTNAME));
+                $stringBuffer->append('&nbsp;');
+                $stringBuffer->append($this->getInfo(self::STAFF_SECONDNAME));
+                $stringBuffer->append('&nbsp;');
+                $stringBuffer->append($this->getInfo(self::STAFF_THIRDNAME));
+                return $stringBuffer->toString();
                 break;
         }
     }
@@ -94,14 +104,13 @@ class staff {
     public function addStaff(){
         
     }
-    
     /**
-     * Get nubmer rooms (all workplace) is staff
+     * Get all workplace is staff
+     * @param integer $staff 
      * @return array workplaces
      */
-    public function getRooms($staff){
-        $result = $db->select('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ?', $staff);
-
+    public function getCountWorkplace($staff){
+        $result = $this->DB->select('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ?', $staff);
         if(!$result)
             return false;
         else
@@ -109,18 +118,37 @@ class staff {
     }
     
     /**
-     * Function for check belonging to the room
-     * @param integer $staff
-     * @param integer $room
-     * @return boolean true/false
-     */    
-    public function isRoom($staff,$room){
-        $result = $db->select('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ? AND '.$this->DBSCHEMA->CELL_WORKPLACE_IDROOM.' = ?', $staff,$room);
-       
+     * Get workplace info by ID
+     * @param integer $workplace 
+     * @return array workplace
+     */
+    public function getWorkplaceInfoById($workplace){
+        $result = $this->DB->selectRow('SELECT * FROM '.$this->DBSCHEMA->TABLE_WORKPLACE.' WHERE '.$this->DBSCHEMA->CELL_WORKPLACE_IDSTAFF.' = ?', $staff);
+
         if(!$result)
             return false;
         else
-            return true;
+            return $result;
+    }
+    /**
+     * Set "Id" current workplace 
+     * @param integer $staff 
+     * @param integer $workplace 
+     * @return boolean
+     */
+    public function setCurrentWorkplaceId($staff,$workplace) {
+        if (!$staff) return false;
+        if (!$workplace) return false;
+        $_SESSION[$staff]['CurrentWorkplace']=$workplace;
+        return true;
+    }
+    /**
+     * Get "Id" current workplace 
+     * @param integer $staff 
+     * @return integer - Id
+     */
+    public function getCurrentWorkplaceId($staff) {
+        return $_SESSION[$staff]['CurrentWorkplace'];
     }
 }
 

@@ -32,5 +32,4 @@ class dbSchema
     public $TABLE_OFFICE = 'office';
     public $CELL_OFFICE_NAME = 'Name';
     public $CELL_OFFICE_DATEREGISTER = 'DateRegister';
-     
 }

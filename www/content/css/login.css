@@ -1,0 +1,90 @@
+/* 
+    Document   : login
+    Created on : 25.01.2012, 3:30:34
+    Author     : Mihael
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.loginForm{
+    display:block;
+    position:relative;
+    margin:0 auto;
+    top:-400px;
+    width:400px;
+}
+.loginForm .logo{
+    position:relative;
+    font-family:segoeui;
+    font-size:60px;
+    text-align:center;
+    color:#FFFFFF;
+    background:rgba(255,255,255,0.5);
+    width:400px;
+    height:94px;
+}
+.loginForm form{
+    display:none;
+    width:400px;
+    margin:0 auto;
+    font-family:Arial, sans-serif;
+    color:#FFF;
+    background:rgba(255,255,255,0.3);
+}
+.loginForm form .title{
+    display:block;
+    text-align:center;
+    padding:5px 0;
+    color:#FFF;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    font-weight:bold;
+    cursor:default;
+}
+.loginForm form table{
+    pading:0;
+    width:100%;
+}
+.loginForm form table td.left{text-align:left;}
+.loginForm form table td.right{text-align:right;}
+.loginForm form input{
+    width:250px;
+    outline:none;
+    border:1px solid #b6b6b6;
+    padding:2px 5px;
+    background:rgba(255,255,255,0.9);
+}
+.loginForm form .info{
+    display:block;
+    font-size:10px;
+    font-weight:bold;
+    font-family:Arial, sans-serif;
+    color:#a90000;
+}
+.loginForm form .buttonsArea{
+    padding:10px 0;
+    text-align:center;
+}
+.loginForm .buttonEnter:hover{background:rgba(255,255,255,0.6);}
+.loginForm .buttonEnter{
+    padding:5px 20px;
+    background:rgba(255,255,255,0.3);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color:#FFF;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.loginForm .buttonForgot:hover{background:rgba(255,255,255,0.6);}
+.loginForm .buttonForgot{
+    padding:5px 20px;
+    background:rgba(255,255,255,0.3);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color:#FFF;
+    font-size:14px;
+    cursor:pointer;
+}
