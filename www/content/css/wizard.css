@@ -1,0 +1,17 @@
+/* 
+    Document   : wizard
+    Created on : 25.01.2012, 23:38:17
+    Author     : Mihael
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.office .page .wizard{
+    display:block;
+    position:relative;
+    width:80%;
+    height:80%;
+    margin:0 auto;
+    overflow:hidden;
+    background:rgba(255,255,255,0.4);
+}
