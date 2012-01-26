@@ -12,8 +12,8 @@ $office = new office();
             <div class="currentOffice">
                 <div class="current">
                     <?
-                        $curentOffice = $office->getCurrentOfficeInfo();
-                        echo $curentOffice[Name];
+                        //$curentOffice = $office->getCurrentOfficeInfo();
+                        //echo $curentOffice[Name];
                     ?>
                 </div>
                 <ul>
