@@ -6,7 +6,8 @@
 
 
 constants = {
-    PAGE_WIZARD: 'wizard',
+    PAGE_WIZARD: 0,
+    PAGE_RIGHT:  1,
     
     ACTION_LOGOUT: 'logout',
     ACTION_LOGIN: 'login',
@@ -48,6 +49,17 @@ constants = {
     SPEED_FAST: 'fast',
     
     EL_MAIN_DATA: '.mainData',
+    EL_PAGES: '.pages',
+    EL_PAGE:  '.page',
+    EL_PAGE_RIGHT: '.page .right',
+    EL_PAGE_RIGHT_TOP_MENU: '.page .right .topMenu',
+    EL_PAGE_MENU: '.page .left ul',
+    EL_PAGE_MENU_ITEM: '.page .left ul li',
+    EL_PAGE_RIGHT_VS: '.page .right .verticalScroll',
+    EL_PAGE_RIGHT_VS_ITEM: '.page .right .verticalScroll .verticalItem',
+    EL_PAGE_RIGHT_HS: '.page .right .horisontalScroll',
+    EL_PAGE_RIGHT_HS_ITEM: '.page .right .horisontalScroll .item',
+    
     EL_LOGIN_FORM: '.loginForm',
     EL_LOGIN_FORM_FORM: '.loginForm form',
     EL_LOGIN_FORM_EMAIL: '.loginForm .email',
@@ -55,24 +67,17 @@ constants = {
     EL_LOGIN_FORM_PASSWORD: '.loginForm .password',
     EL_LOGIN_FORM_PASSWORD_INFO: '.loginForm .passwordInfo',
     EL_LOGIN_FORM_BUT_ENTER: '.loginForm .buttonEnter',
-    EL_OFFICE_HEAD: '.office .head',
-    EL_OFFICE_PAGE: '.office .page',
-    EL_OFFICE_PAGE_RIGHT: '.office .page .right',
-    EL_OFFICE_PAGE_RIGHT_TOP_MENU: '.office .page .right .topMenu',
-    EL_OFFICE_PAGE_MENU: '.office .page .left ul',
-    EL_OFFICE_PAGE_MENU_ITEM: '.office .page .left ul li',
-    EL_OFFICE_PAGE_RIGHT_VS: '.office .page .right .verticalScroll',
-    EL_OFFICE_PAGE_RIGHT_VS_ITEM: '.office .page .right .verticalScroll .verticalItem',
-    EL_OFFICE_PAGE_RIGHT_HS: '.office .page .right .horisontalScroll',
-    EL_OFFICE_PAGE_RIGHT_HS_ITEM: '.office .page .right .horisontalScroll .item',
-    EL_OFFICE_FOOTER: '.office .footer',
-    EL_OFFICE_HEAD_USER: '.office .head .user',
-    EL_OFFICE_HEAD_CURRENT_OFFICE: '.office .head .currentOffice',
-    EL_OFFICE_HEAD_CURRENT_OFFICE_MENU_ITEM: '.office .head .currentOffice ul li',
-    EL_OFFICE_HEAD_LOGO: '.office .head .logo',
-    EL_OFFICE_HEAD_LOGO_MENU: '.office .head .logo ul',
-    EL_OFFICE_HEAD_LOGO_MENU_ITEM: '.office .head .logo ul li',
-    EL_OFFICE_HEAD_LOGO_MENU_ITEM_LOGOUT: '.office .head .logo ul .logout',
+    
+    EL_HEAD: '.office .head',
+    EL_FOOTER: '.office .footer',
+    
+    EL_HEAD_USER: '.office .head .user',
+    EL_HEAD_CURRENT_OFFICE: '.office .head .currentOffice',
+    EL_HEAD_CURRENT_OFFICE_MENU_ITEM: '.office .head .currentOffice ul li',
+    EL_HEAD_LOGO: '.office .head .logo',
+    EL_HEAD_LOGO_MENU: '.office .head .logo ul',
+    EL_HEAD_LOGO_MENU_ITEM: '.office .head .logo ul li',
+    EL_HEAD_LOGO_MENU_ITEM_LOGOUT: '.office .head .logo ul .logout',
     
     TEXT_CONFIRM: 'Вы действительно хотите ',
     TEXT_CONFIRM_INTERROGATION: '?',

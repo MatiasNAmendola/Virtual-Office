@@ -22,7 +22,7 @@ $office = new office();
                 </ul>
             </div>
             <div class="title">
-                <?=$staff->getInfo($staff::STAFF_FULLNAME);?>
+                
             </div>
         </div>
         <div class="logo">
@@ -35,7 +35,7 @@ $office = new office();
             </ul>
         </div>
     </div>
-    <div class="page"></div>
+    <div class="pages"></div>
     <div class="footer">
         Created by Mihael Isaev
     </div>
