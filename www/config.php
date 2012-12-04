@@ -1,40 +1,27 @@
 <?
-
 ini_set('session.gc_maxlifetime', 31536000);
 session_start();
 
-if (defined('DEBUG') && DEBUG)
-{
+if (defined('DEBUG') && DEBUG) {
     error_reporting(E_ALL ^ E_NOTICE);
     ini_set('display_errors', 1);
 }
 
 define('SITE_PATH', dirname(__FILE__));
-define('SITE_URL', 'http://virplace.ru');
+define('SITE_URL', 'http://office.mihaelisaev.com');
 define('DS', DIRECTORY_SEPARATOR);
-
 define('AJAX_PATH', SITE_PATH.DS.'../ajax/');
 define('CONTENT_PATH', SITE_PATH.DS.'content/');
-define('MDL_PATH', SITE_PATH.DS.'modules/');
-define('TMPL_PATH', SITE_PATH.DS.'templates/');
-
+define('MDL_PATH', SITE_PATH.DS.'../modules/');
+define('TMPL_PATH', SITE_PATH.DS.'../templates/');
 define('CLASS_PATH', SITE_PATH.DS.'../classes/');
+define('LANG_PATH', SITE_PATH.DS.'../language/');
+define('IMAGES_PATH', CONTENT_PATH.DS.'images/');
 
-define('IMAGES_PATH', CONTENT_PATH.DS.'content/images/');
-
-
-function __autoload($class_name)
-{
+function __autoload($class_name) {
     $class_file = CLASS_PATH.DS.$class_name.'.php';
-    if (file_exists($class_file)) {
+    if (file_exists($class_file))
         require_once($class_file);
-    }
 }
 
-include('content/language/ru.php');
-
 header('Content-Type: text/html; charset=UTF-8');
-
-function ie_detect() {echo 'litestore';/* if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)) { echo 'litestoreIE'; } else { echo 'litestore'; } */}
-
-

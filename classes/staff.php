@@ -45,13 +45,13 @@ class staff {
                 return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][Login];
                 break;
             case self::STAFF_FIRSTNAME:
-                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameFirst];
+                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][FirstName];
                 break;
             case self::STAFF_SECONDNAME:
-                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameSecond];
+                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][SecondName];
                 break;
             case self::STAFF_THIRDNAME:
-                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][NameThird];
+                return $_SESSION[$this->AUTHORIZATION->SESSION_USERS_TAG][ThirdName];
                 break;
             case self::STAFF_FULLNAME:
                 $stringBuffer = new StringBuffer();
@@ -99,12 +99,6 @@ class staff {
     }
     
     /**
-     * Add new staff 
-     */
-    public function addStaff(){
-        
-    }
-    /**
      * Get all workplace is staff
      * @param integer $staff 
      * @return array workplaces
@@ -150,6 +144,16 @@ class staff {
      */
     public function getCurrentWorkplaceId($staff) {
         return $_SESSION[$staff]['CurrentWorkplace'];
+    }
+    
+    
+    
+    public function isFirstTime(){
+        $wp = new workplace();
+        if($wp->getCountWorkplaces()>0)
+            return false;
+        else
+            return true;
     }
 }
 

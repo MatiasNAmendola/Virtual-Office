@@ -15,6 +15,7 @@ html = {}
  * Load main area
  */
 html.loadArea = function(area){
+    system.log('load area: '+area);
     ajax.run({
         data: ({module: constants.MODULE_HTML_GLOBAL_AREA, action:area}),
         showProgressBar: true,
@@ -22,82 +23,73 @@ html.loadArea = function(area){
         onSuccess: function(data){
             html.setAreaData(data);
             html.afterLoadArea(area);
+            system.log('finish load area: '+area);
         }
     });
 }
 
 html.setAreaData = function(data){
     $(constants.EL_MAIN_DATA).html(data);
+    system.log('set area data');
 }
 
 html.afterLoadArea = function(area){
+    system.log('afterloadarea: '+area);
+    html.bind(area);
     switch(area){
         case constants.GLOBAL_AREA_LOGIN:
             $(constants.EL_LOGIN_FORM).animate({top: 0}, 1000);
-            setTimeout(function(){$(constants.EL_LOGIN_FORM_FORM).slideDown();}, 1200);
-            html.bind(area);
+            setTimeout(function(){$(constants.EL_LOGIN_FORM_FORM_LOGIN).slideDown();}, 1200);
         break;
         case constants.GLOBAL_AREA_CABINET:
-            $(constants.EL_HEAD).animate({top: 0}, 1000);
-            setTimeout(function(){
-                var firstItemInMenu = $(constants.EL_HEAD_LOGO_MENU_ITEM).first().attr(constants.ATTR_CLASS);
-                html.load(firstItemInMenu, false, true);
-                html.resize(area);
-                html.bind(area);
+            $(constants.EL_HEAD).animate({top: 0}, 1000, function(){
                 $(constants.EL_HEAD_USER).fadeIn(constants.SPEED_SLOW);
-                $(constants.EL_PAGE).fadeIn(constants.SPEED_SLOW);
+                $(constants.EL_PAGES).fadeIn(constants.SPEED_SLOW);
                 $(constants.EL_FOOTER).fadeIn(constants.SPEED_SLOW);
-            }, 800);
+            });
+            var firstItemInMenu = $(constants.EL_HEAD_LOGO_MENU_ITEM).first().attr(constants.ATTR_CLASS);
+            html.load(firstItemInMenu, false, true);
+            html.resize();
+            system.log('finish afterloadarea: '+area);
         break;
     }
 }
 
-html.resize = function(key){
-    switch(key){
-        case constants.GLOBAL_AREA_CABINET:
-            html.calculatePagesHeight();
-        break;
-        case constants.PAGE_RIGHT:
-            html.resizePageRight();
-        break;
-        case constants.PAGE_WIZARD:
-            html.resizePageRight();
-        break;
-    }
+html.showRegistration = function(){
+    $(constants.EL_LOGIN_FORM_FORM_LOGIN).slideUp(function(){
+        $(constants.EL_LOGIN_FORM_FORM_REGISTRATION).slideDown();
+    });
 }
 
-html.calculatePagesHeight = function(){
-    var headHeight = $(constants.EL_HEAD).outerHeight();
-    var footerHeight = $(constants.EL_FOOTER).outerHeight();
-    var windowHeight = $(window).height();
-    var pageHeight = windowHeight - footerHeight - headHeight - 50;
-    $(constants.EL_PAGES).css(constants.CSS_HEIGHT, pageHeight+constants.CSS_PX);
-};
+html.showLogin = function(){
+    $(constants.EL_LOGIN_FORM_FORM_REGISTRATION).slideUp(function(){
+        $(constants.EL_LOGIN_FORM_FORM_LOGIN).slideDown();
+    });
+}
 
 html.load = function(page, showProgressBar, fast) {
-    if(system.currentPage !== page)
+    if(system.currentPage !== page && !$('.pages .'+page).length)
         ajax.run({
             data: ({module: constants.MODULE_HTML_AREA, action: page}),
             fast: fast,
             showProgressBar: showProgressBar,
             onSuccess: function(data){
-                if($('.pages .'+page).length)
-                    html.showPage(page, fast);
-                else
-                    html.appendPage(page, data, fast);
-                html.resize(page);
+                html.appendPage(page, data, fast);
+                html.resize();
                 if($(constants.EL_PAGE).length){
-                    html.resize(constants.PAGE_RIGHT);
+                    html.resizePage(page);
                     html.bind(constants.PAGE_RIGHT);
                 }
                 html.bind(page);
                 system.currentPage = page;
             }
         });
+    else if(system.currentPage !== page && $('.pages .'+page).length)
+        html.showPage(page, fast);
 }
 
 html.appendPage = function(page, data, fast){
-    console.log('appendPage '+page+' has called');
+    system.log('appendPage '+page+' has called');
     $('.pages').append('<div class="page '+page+'">'+data+'</div>');
     $('.page').fadeOut('slow',function(){
         if(fast)
@@ -108,7 +100,7 @@ html.appendPage = function(page, data, fast){
 }
 
 html.showPage = function(page, fast){
-    console.log('showPage '+page+' has called');
+    system.log('showPage '+page+' has called');
     $('.page').fadeOut('slow',function(){
         if(fast)
             $('.'+page).fadeIn();
@@ -162,9 +154,7 @@ html.bindGlobal = function(){
         });
     /* END - Top menu binds */
     
-    $(window).resize(function(){
-        html.resize(key);
-    });
+    $(window).resize(function(){html.resize();});
 }
 
 html.bindCabinet = function(){
@@ -204,16 +194,29 @@ html.bindCabinet = function(){
         });
     });
     /* END - Right top menu binds */
+    
+    $(window).resize(function(){
+        html.resize();
+    });
 }
 
 html.bindLogin = function(){
-    $(constants.EL_LOGIN_FORM_BUT_ENTER).bind(constants.EVENT_CLICK, function(){
-        auth.login();
-    });
-    $(constants.EL_LOGIN_FORM_FORM).keypress(function(){
+    $(constants.EL_LOGIN_FORM_BUT_REGISTRATION).bind(constants.EVENT_CLICK, function(){html.showRegistration();});
+    $(constants.EL_LOGIN_FORM_BUT_ENTER).bind(constants.EVENT_CLICK, function(){auth.login();});
+    $(constants.EL_REGISTER_FORM_BUT_CANCEL).bind(constants.EVENT_CLICK, function(){html.showLogin();});
+    $(constants.EL_REGISTER_FORM_BUT_REGISTER).bind(constants.EVENT_CLICK, function(){auth.register();});
+    $(constants.EL_LOGIN_FORM_FORM_LOGIN).keypress(function(){
         if(event.keyCode == 13)
             auth.login();
     });
+    $(constants.EL_LOGIN_FORM_FORM_REGISTRATION).keypress(function(){
+        if(event.keyCode == 13)
+            auth.register();
+    });
+    if($(constants.EL_REGISTER_FORM_CAPTCHA_IMAGE).length)
+        $(constants.EL_REGISTER_FORM_CAPTCHA_IMAGE).click(function(){
+            $(this).attr('src', '/content/scripts/php/captcha/?area=register&random='+helper.getRandomInt(0,1000));
+        });
 }
 
 
@@ -226,38 +229,83 @@ html.loadWizard = function(page) {
         },
         onSuccess: function(data){
             $(constants.EL_PAGE).html(data).fadeIn(constants.SPEED_SLOW);
-            html.resize(constants.PAGE_WIZARD);
+            html.resize();
             html.bind(constants.PAGE_WIZARD);
         }
     });
 }
 
-
-html.resizePageRight = function(){
-    var windowWidth = $(window).width();
-    var newRightWidth = windowWidth-400;
-    $(constants.EL_PAGE_RIGHT).css('width',newRightWidth+'px');
-    var rightWidth = $(constants.EL_PAGE_RIGHT).width();
-    var rightHeight = $(constants.EL_PAGE_RIGHT).height();
-    var topMenuHeight = $(constants.EL_PAGE_RIGHT_TOP_MENU).outerHeight();
-    var horisontalScrollItemLength = $(constants.EL_PAGE_RIGHT_HS_ITEM).length;
-    //TODO remove hardcode +100
-    var horisontalScrollWidth = rightWidth*horisontalScrollItemLength+100;
-    var horisontalScrollHeight = rightHeight-topMenuHeight;
-    var verticalScrollHeight = rightHeight*2;
-    $(constants.EL_PAGE_RIGHT_VS).css(constants.CSS_HEIGHT,verticalScrollHeight+constants.CSS_PX);
-    $(constants.EL_PAGE_RIGHT_VS).css(constants.CSS_WIDTH,rightWidth+constants.CSS_PX);
-    $(constants.EL_PAGE_RIGHT_VS_ITEM).css(constants.CSS_HEIGHT,rightHeight+constants.CSS_PX);
-    $(constants.EL_PAGE_RIGHT_VS_ITEM).css(constants.CSS_WIDTH,rightWidth+constants.CSS_PX);
-    $(constants.EL_PAGE_RIGHT_HS_ITEM).css(constants.CSS_WIDTH,rightWidth+constants.CSS_PX);
-    $(constants.EL_PAGE_RIGHT_HS).css(constants.CSS_WIDTH,horisontalScrollWidth+constants.CSS_PX);
-    $(constants.EL_PAGE_RIGHT_HS).css(constants.CSS_HEIGHT,horisontalScrollHeight+constants.CSS_PX);
+html.resize = function(){
     $(constants.EL_PAGE_MENU_ITEM).each(function(i){
-        if($(this).is(constants.CLASS_ACTIVE)){
-            var rightHeight = $(constants.EL_PAGE_RIGHT).height();
-            var topPosition = rightHeight*i;
-            $(constants.EL_PAGE_RIGHT_VS).animate({top:'-'+topPosition+constants.CSS_PX},0);
-        }
+        var page = $(this).attr('class');
+        html.resizePage(page);
     });
-    console.log('resize right finish');
+}
+
+html.resizePage = function(page){
+        //Высота окна
+        var windowHeight = $(window).height();
+        system.logA('windowHeight = '+windowHeight);
+        //Высота .header
+        var headHeight = $(constants.EL_HEAD).outerHeight();
+        //Высота .footer
+        var footerHeight = $('.footer').outerHeight();
+        //Высота .pages
+        var pagesHeight = windowHeight - footerHeight - headHeight - 50;
+        $(constants.EL_PAGES).css(constants.CSS_HEIGHT, pagesHeight+constants.CSS_PX);
+        system.logA('pagesHeight = '+pagesHeight);
+        //Высота .page
+        $('.pages.'+page).css('height',pagesHeight+'px');
+        var pageHeight = pagesHeight;
+        system.logA('pageHeight = '+pageHeight);
+        //Высота .right
+        $('.'+page+' '+constants.EL_PAGE_RIGHT).css('height',pageHeight);
+        var rightHeight = $('.'+page+' '+constants.EL_PAGE_RIGHT).height();
+        //Высота .topMenu
+        var topMenuHeight = $('.'+page+' '+constants.EL_PAGE_RIGHT_TOP_MENU).outerHeight();
+        //Высота .verticalScroll
+        var verticalScrollHeight = rightHeight*$('.'+page+' '+constants.EL_PAGE_MENU_ITEM).length;
+        //Высота .horisontalScroll
+        var horisontalScrollHeight = rightHeight-topMenuHeight;
+        
+        //Ширина окна
+        var windowWidth = $(window).width();
+        
+        //Ширина .right
+        var newRightWidth = windowWidth-400;
+        $('.'+page+' '+constants.EL_PAGE_RIGHT).css('width',newRightWidth+'px');
+        
+        var rightWidth = $('.'+page+' '+constants.EL_PAGE_RIGHT).width();
+        
+        
+        var horisontalScrollItemLength = $('.'+page+' '+constants.EL_PAGE_RIGHT_HS_ITEM).length;
+        //TODO remove hardcode +100
+        var horisontalScrollWidth = rightWidth*horisontalScrollItemLength+100;
+        
+        
+        $('.'+page+' '+constants.EL_PAGE_RIGHT_VS).css(constants.CSS_HEIGHT,verticalScrollHeight+constants.CSS_PX);
+        system.logA('right height = '+rightHeight);
+        system.logA('VS height = '+verticalScrollHeight);
+        $('.'+page+' '+constants.EL_PAGE_RIGHT_VS).css(constants.CSS_WIDTH,rightWidth+constants.CSS_PX);
+        $('.'+page+' '+constants.EL_PAGE_RIGHT_VS_ITEM).css(constants.CSS_HEIGHT,rightHeight+constants.CSS_PX);
+        $('.'+page+' '+constants.EL_PAGE_RIGHT_VS_ITEM).css(constants.CSS_WIDTH,rightWidth+constants.CSS_PX);
+        $('.'+page+' '+constants.EL_PAGE_RIGHT_HS_ITEM).css(constants.CSS_WIDTH,rightWidth+constants.CSS_PX);
+        $('.'+page+' '+constants.EL_PAGE_RIGHT_HS).css(constants.CSS_WIDTH,horisontalScrollWidth+constants.CSS_PX);
+        $('.'+page+' '+constants.EL_PAGE_RIGHT_HS).css(constants.CSS_HEIGHT,horisontalScrollHeight+constants.CSS_PX);
+        $('.'+page+' '+constants.EL_PAGE_MENU_ITEM).each(function(i){
+            if($(this).is(constants.CLASS_ACTIVE)){
+                var rightHeight = $(constants.EL_PAGE_RIGHT).height();
+                var topPosition = rightHeight*i;
+                $('.'+page+' '+constants.EL_PAGE_RIGHT_VS).animate({top:'-'+topPosition+constants.CSS_PX},0);
+            }
+        });
+        system.log('resize right finish');
 };
+
+html.formInputColorAndError = function(data, elementInput, elementInfo){
+    if(data == '')
+        $(elementInput).css(constants.CSS_BACKGROUND, constants.COLOR_WHITE);
+    else
+        $(elementInput).css(constants.CSS_BACKGROUND, constants.COLOR_LIGHT_PINK);
+    $(elementInfo).html(data);
+}

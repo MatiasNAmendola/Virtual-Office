@@ -11,7 +11,12 @@ session_start();
 $captcha = new KCAPTCHA();
 
 //if($_REQUEST[session_name()]){
-	$_SESSION['captcha_keystring'] = $captcha->getKeyString();
+switch($_GET[area]){
+    case "register":
+        $_SESSION['captcha_register']['captcha_keystring'] = $captcha->getKeyString();
+        break;
+}
+	
 //}
 
 ?>

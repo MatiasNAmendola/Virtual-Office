@@ -6,7 +6,7 @@
         Purpose of the stylesheet follows.
 */
 .pages{
-    display:block;
+    display:none;
     height:100%;
     height:100%;
 }
@@ -69,6 +69,7 @@
     height:100%;
     width:100%;
     overflow:hidden;
+    background:red;
 }
 
 .page .right .horisontalScroll{

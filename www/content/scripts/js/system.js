@@ -13,6 +13,9 @@ $.include('/content/scripts/js/auth.js');
 
 system = {}
 
+system.printLog = true;
+system.printAdditional = false;
+
 /**
  * Interface loader
  */
@@ -32,6 +35,16 @@ system.dialog = function(message){
         return true;
     else
         return false;
+}
+
+system.log = function(message){
+    if(system.printLog)
+        console.log('Message: '+message);
+}
+
+system.logA = function(message){
+    if(system.printAdditional)
+        console.log('Additional: '+message);
 }
 
 /**
